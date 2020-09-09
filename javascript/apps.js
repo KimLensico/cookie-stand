@@ -1,25 +1,17 @@
 'use strict';
 
 // variables to put graphs into html 
-var locateSeattle = document.getElementById('stSeattle');
-console.log(locateSeattle);
-var locateTokyo = document.getElementById('stTokyo');
-console.log(locateTokyo);
-var locateDubai = document.getElementById('stDubai');
-var locateParis = document.getElementById('stParis');
-var locateLima = document.getElementById('stLima');
+// var locateSeattle = document.getElementById('stSeattle');
+// var locateTokyo = document.getElementById('stTokyo');
+// var locateDubai = document.getElementById('stDubai');
+// var locateParis = document.getElementById('stParis');
+// var locateLima = document.getElementById('stLima');
 
 // cookie data to put into html
-var cookieData = document.getElementById('cookiedata');
+var cookieData = document.getElementById('cookieTable');
 
 // store hours 
 var storeHours = ['6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM'];
-// Store locations
-var seattle = new Store('Seattle', 23, 65, 6.3);
-var tokyo = new Store('Tokyo', 3, 24, 1.2);
-var dubai = new Store('Dubai', 11, 38, 3.7);
-var paris = new Store('Paris', 20, 38, 3.7);
-var lima = new Store('Lima', 2, 16, 4.6);
 
 // Generates random cookie data numbers in between min and max arguments
 function randomCookieGen (min, max) {
@@ -28,31 +20,53 @@ function randomCookieGen (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function tableHours() {
-        for (var i = 0; i < storeHours.length; i++) {
-            var graphColumns = document.createElement('th');
-            graphColumns.textContent += storeHours[i];
-            cookieData.append(graphColumns);
-
-    }
-}
-
-// var seattle = new Store('Seattle', 23, 65, 6.3);
-// var tokyo = new Store('Tokyo', 3, 24, 1.2);
-// var dubai = new Store('Dubai', 11, 38, 3.7);
-// var paris = new Store('Paris', 20, 38, 3.7);
-// var lima = new Store('Lima', 2, 16, 4.6);
-
 // constructor for cookie locations 
-function StoreLocation(name, min, max, avgCookie) {
-    this.locatename = name;
+function StoreLocation(location, min, max, avgCookie, cookiesEachHour) {
+    this.locatename = location;
     this.minCust = min;
     this.maxCust = max;
     this.avgCookie = avgCookie;
-    this.hourlySales = 0;
+    this.hourlySales = cookiesEachHour;
+    this.totalCookieSales = function () {
+        return Math.floor(Math.random() * (this.maxCust - this.minCust + 1) + this.minCust);
+    }
 }
 
+Store.prototype.render = function () {
+    var trElement = document.createElement('tr');
+    var tdElement = document.createElement('td');
+    tdElement.textContent - (this.name);
+    trElement.append(tdElement);
 
+    var totalCookiesPerDay = 0;
+    for (var i = 0; i < hours.length; i++) {
+
+        table = document.createElement('td');
+        var cookiesFor1hr = Math.round(this.totalCookieSales(this.minCust, this.maxCust) * avgCookie);
+        table.textContent = hours[i] + ': ' + cookiesFor1hr;
+        trElement.appendChild(table);
+        myTable.appendChild(trElement);
+        totalCookiesPerDay += cookiesFor1hr;
+
+    }
+    var total = document.createElement('td');
+    total.textContent = totalCookiesPerDay;
+    trElement.appendChild(total);
+}
+
+// Store locations
+var seattle = new Store('Seattle', 23, 65, 6.3);
+var tokyo = new Store('Tokyo', 3, 24, 1.2);
+var dubai = new Store('Dubai', 11, 38, 3.7);
+var paris = new Store('Paris', 20, 38, 3.7);
+var lima = new Store('Lima', 2, 16, 4.6);
+
+
+seattle.render();
+tokyo.render();
+dubai.render();
+paris.render();
+lima.render();
 
 //     var store1 = {
 //         name: 'Seattle',
