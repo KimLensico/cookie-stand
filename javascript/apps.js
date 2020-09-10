@@ -1,12 +1,8 @@
 'use strict'
 
 var stores = null;
-// cookie data to put into html
-var cookieData = document.getElementById('cookieTable');
-// store hours 
+var storeInfo = document.getElementById('storeSales');
 var storeHours = ['6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM'];
-
-// Grabbing  our root container
 var myTable = document.getElementById("myTable");
 
 
@@ -17,13 +13,8 @@ var myTable = document.getElementById("myTable");
 
 //creates a table row of header elements with values NOT from a Store
 function createTableHeader() {
-    //create the TR
     var trElement = document.createElement('tr');
-    // append to table
     myTable.appendChild(trElement);
-
-
-    // add the first TH with "store location"
     var thElement = document.createElement('th');
     thElement.textContent = "Store location";
     trElement.appendChild(thElement);
@@ -91,8 +82,8 @@ function createTableFooter() {
 
 }
 
-function Store(city, minCust, aveCookieSale, cookiesEachHour) {
-    this.city = city ;
+function Store(city, minCust, maxCust, aveCookieSale, cookiesEachHour) {
+    this.city = city;
     this.minCust = minCust;
     this.maxCust = maxCust;
     this.aveCookieSale = aveCookieSale;
@@ -110,7 +101,7 @@ Store.prototype.render = function () {
     trElement.appendChild(tdElement);
 
     var totalCookiesPerDay = 0;
-    for (var i = 0; i < hours.length; i++) {
+    for (var i = 0; i < storeHours.length; i++) {
 
         var table = document.createElement('td');
         var cookiesThisHour = Math.round(this.totalCookies(this.minCust, this.maxCust) * this.aveCookieSale);
