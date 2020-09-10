@@ -44,10 +44,6 @@ function createTableFooter() {
     // append to table
     myTable.appendChild(trElement);
 
-    // add a td with 'totals'
-    var thElement = document.createElement('th');
-    trElement.appendChild(thElement);
-    thElement.textContent = ('Totals');
 
     // getting through each store and add up each hourly total
     // hit each store that exists
