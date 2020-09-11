@@ -90,7 +90,8 @@ function Store(city, minCust, maxCust, aveCookieSale, cookiesEachHour) {
     //stores.push(this)
 }
 
-Store.prototype.render = function () {
+Store.prototype.renderToTable = function () {
+    //takes all store data (name / cookiesPerHour)
     var trElement = document.createElement('tr');
     var tdElement = document.createElement('td');
     tdElement.textContent = (this.city);
