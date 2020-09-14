@@ -1,5 +1,7 @@
 'use strict'
 
+var table = document.getElementById('cookie-table');
+var form = document.getElementById('newstore');
 var storeHours = ['6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM'];
 var stores = [];
 
@@ -22,17 +24,18 @@ function Store(storeName, minCust, maxCust, avgCookiesPerCust) {
 Store.prototype.generateCookiesAtHour = function () {
     //random number?
     //calc value between min and max
-    var customers = Math.floor(Math.random() * (this.maxCust - this.minCust + 1) + this.minCust);
-    var random = Math.round(customers * this.avgCookiesPerCust);
-    return random; 
+    var customers = Math.floor(Math.random() * (this.maxCust - this.minCust) + 1) + this.minCust;
+
+    //multiply by avgCookiesperCust
+    return Math.round(customers * this.avgCookiesPerCust);
 }
 
 Store.prototype.generateDailyCookies = function () {
     this.cookiesAtEachHour = [];
     for (var i = 0; i < storeHours.length; i++) {
-    var randomCookies = this.generateCookiesAtHour();
-    this.cookiesAtEachHour.push(randomCookies);
+        this.cookiesAtEachHour.push(this.generateCookiesAtHour());
     }
+    return this.cookiesAtEachHour
 }
 
 //  Filling a table with values from our stores
@@ -46,19 +49,17 @@ Store.prototype.renderToTable = function () {
     this.cookiesAtEachHour // an array of numbers
     //table head
 
-    var table = document.getElementById('cookietable');
+    var table = document.getElementById('cookie-table');
     var tHead = document.createElement('thead');
-    cookietable.append(tHead);
+    cookie-table.append(tHead);
 
     //render a row to our table
     var tableRow = document.createElement('tr'); // one row per store
     tHead.append(tableRow);
 
     var tableData = document.createElement('td'); // one data cell per hour
+    // tableData.textContent = this.storeName; 
     tableRow.append(tableData);
-
-    tableData.textContent = this.storeName;
-
 
     // lets find the cookie sales and append it to our row
     for (var i = 0; i < this.cookiesAtEachHour.length; i++) {
@@ -67,8 +68,6 @@ Store.prototype.renderToTable = function () {
         tableRow.append(tableData);
     }
 }
-
-
 
 // Store locations
 var seattle = new Store('Seattle', 23, 65, 6.3);
@@ -96,7 +95,7 @@ console.log(stores);
 function handleSubmit(event) {
     event.preventDefault();
 
-var { storeName, minCust, maxCust, avgCookies } = event.target;
+var { name, minCust, maxCust, avgCookies } = event.target;
 
 var store = new Store(name.value, parseInt(minCust.value), parseInt(maxCust.value), parseInt(avgCookies.value));
 console.log(store);
@@ -107,7 +106,7 @@ store.renderToTable();
 
 
 // Generating new Store from a form
-// form.addEventListener('submit', 'handleSubmit');
+form.addEventListener('submit', 'handleSubmit')
 
 // attempt 1 starting line
 
