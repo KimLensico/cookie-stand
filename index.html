@@ -9,7 +9,7 @@
 </head>
 <body>
     <header>
-        <img src="https://raw.githubusercontent.com/codefellows/seattle-201d67/master/class-08/lab-b/assets/chinook.jpg" id = "salmon">
+        <img src="https://raw.githubusercontent.com/codefellows/seattle-201d67/master/class-08/lab-b/assets/salmon.png" id = "salmon">
     </header>
     <nav>
         <a href="index.html">home</a>
@@ -21,6 +21,7 @@
     <!-- Stores -->
 
     <h2>Locations</h2>
+    <img src ="https://raw.githubusercontent.com/codefellows/seattle-201d67/master/class-08/lab-b/assets/fish.jpg">
 
     <h3>Seattle</h3>
     <p>1234 5th Street, Seattle, WA 98125 <br />
@@ -65,33 +66,30 @@
         <li>Sunday:</li>
         <li>Monday-Saturdays:</li>
     </ul>
+
+    <H2>Meet the CEO!</H2>
+    <img src ="https://raw.githubusercontent.com/codefellows/seattle-201d67/master/class-08/lab-b/assets/family.jpg"> <br>
+    PATT & FAMILY
+
+    <h2>Products</h2>
+    <img src="https://raw.githubusercontent.com/codefellows/seattle-201d67/master/class-08/lab-b/assets/cutter.jpeg">
+    <img src="https://raw.githubusercontent.com/codefellows/seattle-201d67/master/class-08/lab-b/assets/frosted-cookie.jpg"> <br>
+
+    <img src="">
+    <img src="">
+    <img src="">
 </main>
 
     <footer>
-        Copyrighted 2020 by Kimberly Lensico
+        <center>
+            <a href="/">ABOUT US</a> 
+            <a href="/">PRIVACY POLICY</a> 
+            <a href="/">TERMS OF SERVICE</a>
+            <a href="/">FAQ</a> <br>
+            Copyrighted 2020 by Kimberly Lensico <br>
+            <img src="https://raw.githubusercontent.com/codefellows/seattle-201d67/master/class-08/lab-b/assets/chinook.jpg">
+        </center>
     </footer>
-
-    <script>
-var slideIndex = 0;
-showSlides();
-
-function showSlides() {
-  var i;
-  var slides = document.getElementsByClassName("mySlides");
-  var dots = document.getElementsByClassName("dot");
-  for (i = 0; i < slides.length; i++) {
-    slides[i].style.display = "none";  
-  }
-  slideIndex++;
-  if (slideIndex > slides.length) {slideIndex = 1}    
-  for (i = 0; i < dots.length; i++) {
-    dots[i].className = dots[i].className.replace(" active", "");
-  }
-  slides[slideIndex-1].style.display = "block";  
-  dots[slideIndex-1].className += " active";
-  setTimeout(showSlides, 2000); 
-}
-    </script>
 
 </body>
 </html>
