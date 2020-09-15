@@ -16,7 +16,7 @@ function Store(storeName, minCust, maxCust, avgCookiesPerCust) {
     this.avgCookiesPerCust = avgCookiesPerCust;
     this.cookiesAtEachHour = [];
     this.totalDailyCookies = 0;
-    stores.push(this);
+    stores.push(this); // push store into array 
 }
 
 Store.prototype.generateCookiesAtHour = function () {
@@ -24,20 +24,16 @@ Store.prototype.generateCookiesAtHour = function () {
     //calc value between min and max
     var customers = Math.floor(Math.random() * (this.maxCust - this.minCust + 1) + this.minCust);
     var random = Math.round(customers * this.avgCookiesPerCust);
-    return random; 
+    this.totalDailyCookies += random; // adding currently daily cookies to random 
+    return random;
 }
 
 Store.prototype.generateDailyCookies = function () {
     this.cookiesAtEachHour = [];
     for (var i = 0; i < storeHours.length; i++) {
-    var randomCookies = this.generateCookiesAtHour();
-    this.cookiesAtEachHour.push(randomCookies);
+        var randomCookies = this.generateCookiesAtHour();
+        this.cookiesAtEachHour.push(randomCookies);
     }
-}
-
-Store.prototype.generateTotalCookies = function () {
-    this.totalDailyCookies = 0;
-    for (var c = 0; c < storeHours.length; c++)''
 }
 
 //  Filling a table with values from our stores
@@ -47,34 +43,29 @@ Store.prototype.generateTotalCookies = function () {
 // append Row to a Table
 
 Store.prototype.renderToTable = function () {
-    // takes all store data (name / cookiesPerHour)
-    this.cookiesAtEachHour // an array of numbers
-    //table head
-    this.totalDailyCookies
 
-    var table = document.getElementById('cookietable');
-    var tHead = document.createElement('thead');
-    var tFoot = document.createElement('tfoot');
-    cookietable.append(tHead);
+    var tbody = document.getElementById('tbody'); // table body 
 
     //render a row to our table
-    var tableRow = document.createElement('tr'); // one row per store
-    tHead.append(tableRow);
+    var row = document.createElement('tr'); // one row per store
+    tbody.append(row);
 
-    var tableData = document.createElement('td'); // one data cell per hour
-    tableRow.append(tableData);
+    var cell = document.createElement('td'); // one data cell per hour
+    row.append(cell);
 
-    var tableDataTotals = document.createElement('tfoot');
-    tableData.append(tableDataTotals);
-
-    tableData.textContent = this.storeName;
+    cell.textContent = this.storeName; // putting the name of the store in each row
 
     // lets find the cookie sales and append it to our row
     for (var i = 0; i < this.cookiesAtEachHour.length; i++) {
-        tableData = document.createElement('td');
-        tableData.textContent = this.cookiesAtEachHour[i];
-        tableRow.append(tableData);
+        cell = document.createElement('td');
+        cell.textContent = this.cookiesAtEachHour[i];
+        row.append(cell);
     }
+
+    // not part of the hourly loop 
+    cell = document.createElement('td'); // creating another table data element already created var
+    row.append(cell); // appending each total to each row 
+    cell.textContent = this.totalDailyCookies;
 }
 
 
@@ -104,15 +95,60 @@ console.log(stores);
 function handleSubmit(event) {
     event.preventDefault();
 
-var { storeName, minCust, maxCust, avgCookies } = event.target;
 
-var store = new Store(name.value, parseInt(minCust.value), parseInt(maxCust.value), parseInt(avgCookies.value));
-console.log(store);
-store.generateDailyCookies();
-store.renderToTable();
+    var { storeName, minCust, maxCust, avgCookies } = event.target;
+
+    //  table body
+    var store = new Store(name.value, parseInt(minCust.value), parseInt(maxCust.value), parseInt(avgCookies.value));
+    console.log(store);
+    store.generateDailyCookies();
+    store.renderToTable();
 }
 
+// table header - store hours and footer - totals 
+function generateTableHead() {
+    var thead = document.getElementById('thead');
+    var row = document.createElement('tr');
+    thead.append(row);
+    var cell = document.createElement('td'); // tabledata = cell/column
+    row.append(cell);
+    for (var h = 0; h < storeHours.length; h++) {
+        // create a cell 
+        // attach cell to the row
+        // give the cell the name of the hour [storeHours array]
+        cell = document.createElement('td');
+        row.append(cell); // row element object using its append [object method], pass another object [cell] to the method
+        cell.textContent = storeHours[h]; // setting text attribute to be equal to the storeHour AT that particular hour 
+    }
+}
 
+//  table footer
+function generateTableFooter() {
+    var tfoot = document.getElementById('tfoot');
+    var row = document.createElement('tr');
+    tfoot.append(row);
+    var cell = document.createElement('td');
+    row.append(cell);
+    var hourlytotal; // used to track the totals of the for loops 
+    var grandtotal = 0;
+    for (var h = 0; h < storeHours.length; h++) { // h for each hour
+        cell = document.createElement('td');
+        row.append(cell);
+        hourlytotal = 0;
+        for (var s = 0; s < stores.length; s++) { // s for store 
+            hourlytotal += stores[s].cookiesAtEachHour[h]; // looping through each hour, resetting each total at 0 [line 136] 
+        }
+        cell.textContent = hourlytotal;
+        grandtotal += hourlytotal;
+    }
+    cell = document.createElement('td');
+    row.append(cell);
+    cell.setAttribute('id', 'Grand Total');
+    cell.textContent = grandtotal;
+}
+
+generateTableHead();
+generateTableFooter();
 
 // Generating new Store from a form
 // form.addEventListener('submit', 'handleSubmit');
