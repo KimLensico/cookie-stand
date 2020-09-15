@@ -1,6 +1,6 @@
 'use strict'
 
-var storeHours = ['6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM'];
+var storeHours = ['6AM', '7AM', '8AM', '9AM', '10AM', '11AM', '12PM', '1PM', '2PM', '3PM', '4PM', '5PM', '6PM', '7PM'];
 var stores = [];
 
 // Creating a store via constructor function
@@ -11,7 +11,7 @@ var stores = [];
 
 function Store(storeName, minCust, maxCust, avgCookiesPerCust) {
     this.storeName = storeName;
-    this.mixCust = minCust;
+    this.minCust = minCust;
     this.maxCust = maxCust;
     this.avgCookiesPerCust = avgCookiesPerCust;
     this.cookiesAtEachHour = [];
@@ -35,6 +35,11 @@ Store.prototype.generateDailyCookies = function () {
     }
 }
 
+Store.prototype.generateTotalCookies = function () {
+    this.totalDailyCookies = 0;
+    for (var c = 0; c < storeHours.length; c++)''
+}
+
 //  Filling a table with values from our stores
 // avgCookiesPerHour
 // create table Row
@@ -45,9 +50,11 @@ Store.prototype.renderToTable = function () {
     // takes all store data (name / cookiesPerHour)
     this.cookiesAtEachHour // an array of numbers
     //table head
+    this.totalDailyCookies
 
     var table = document.getElementById('cookietable');
     var tHead = document.createElement('thead');
+    var tFoot = document.createElement('tfoot');
     cookietable.append(tHead);
 
     //render a row to our table
@@ -57,8 +64,10 @@ Store.prototype.renderToTable = function () {
     var tableData = document.createElement('td'); // one data cell per hour
     tableRow.append(tableData);
 
-    tableData.textContent = this.storeName;
+    var tableDataTotals = document.createElement('tfoot');
+    tableData.append(tableDataTotals);
 
+    tableData.textContent = this.storeName;
 
     // lets find the cookie sales and append it to our row
     for (var i = 0; i < this.cookiesAtEachHour.length; i++) {
@@ -67,7 +76,6 @@ Store.prototype.renderToTable = function () {
         tableRow.append(tableData);
     }
 }
-
 
 
 // Store locations
